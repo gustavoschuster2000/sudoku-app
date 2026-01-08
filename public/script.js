@@ -22,14 +22,31 @@ const btnConfirmDiff = document.getElementById('confirm-difficulty');
 const timerDisplay = document.querySelector('.timer');
 const diffLabel = document.querySelector('.difficulty-label');
 const highScoreDisplay = document.getElementById('high-score');
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = themeToggleBtn.querySelector('.material-symbols-rounded');
 
 /* Initialization */
 window.addEventListener('DOMContentLoaded', () => {
+    loadTheme();
     loadHighScore();
     initGame(difficulty);
 });
 
 /* Event Listeners */
+themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    localStorage.setItem('sudoku-theme', isDark ? 'dark' : 'light');
+});
+
+function loadTheme() {
+    const savedTheme = localStorage.getItem('sudoku-theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeIcon.textContent = 'light_mode';
+    }
+}
 btnNewGame.addEventListener('click', () => {
     dialog.showModal();
 });
